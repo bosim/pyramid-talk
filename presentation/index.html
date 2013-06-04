@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Bo Simonsen on Pyramid</title>
+    <!-- metadata -->
+    <meta name="generator" content="S5" />
+    <meta name="version" content="S5 1.1" />
+    <meta name="presdate" content="20050728" />
+    <meta name="author" content="Bo Simonsen" />
+    <!-- configuration parameters -->
+    <meta name="defaultView" content="slideshow" />
+    <meta name="controlVis" content="hidden" />
+    <!-- style sheet links -->
+    <link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+    <link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+    <link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+    <link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+    <!-- embedded styles -->
+    <style type="text/css" media="all">
+      .imgcon {width: 525px; margin: 0 auto; padding: 0; text-align: center;}
+      #anim {width: 270px; height: 320px; position: relative; margin-top: 0.5em;}
+      #anim img {position: absolute; top: 42px; left: 24px;}
+      img#me01 {top: 0; left: 0;}
+      img#me02 {left: 23px;}
+      img#me04 {top: 44px;}
+      img#me05 {top: 43px;left: 36px;}
+    </style>
+    <!-- S5 JS -->
+    <script src="ui/default/slides.js" type="text/javascript"></script>
+    <script src="highlight.js/highlight.pack.js" type="text/javascript"></script>
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
+    <link rel="stylesheet" title="Default" href="highlight.js/styles/default.css">
+    </head>
+    <body>
+
+      <div class="layout">
+	<div id="controls"><!-- DO NOT EDIT --></div>
+	<div id="currentSlide"><!-- DO NOT EDIT --></div>
+	<div id="header"></div>
+	<div id="footer">
+	  <h1>Pyramid</h1>
+	  <h2>Less batteries than Django</h2>
+	</div>
+
+      </div>
+      <div class="presentation">
+
+	<div class="slide">
+	  <h1>Pyramid</h1>
+	  <h3>Bo Simonsen</h3>
+	  <h4><a href="http://bo.geekworld.dk/">http://bo.geekworld.dk/</a></h4>
+	  <h4><a href = "mailto:bo@geekworld.dk">bo@geekworld.dk</a></h4>
+	</div>
+
+	<div class="slide">
+	  <h1>What is pyramid?</h1>
+	  <ul>
+	    <li>Created by Chris McDonough and Ben Bangert originally as repoze.bfg.</li>
+	    <li>Highly influenced by <a href = "http://www.zope.org">Zope</a>.</li>
+	    <li>No database or ORM support by default, but several works, for example, <a href = "http://www.sqlalchemy.org/">SQLAlchemy</a>.</li>
+	    <li><a href = "http://chameleon.readthedocs.org/en/latest/">Chameleon ZPT template engine</a> as default, but can be interchanged/mixed. Support for <a href = "http://jinja.pocoo.org/docs/">Jinja2</a>, and others.</li>
+	    <li>Relying on WSGI. Runs on <a href = "https://developers.google.com/appengine/">Google AppEngine</a>, <a href = "https://www.heroku.com/">heroku</a>, etc.</li>
+            <li>Python 3 compatible.</li>
+            <li>Some would say more Pythonic than Zope 2 and Django.</li>
+	  </ul>
+	</div>
+
+	<div class="slide">
+          <h1>Features</h1>
+          <ul>
+            <li>Views and templates.</li>
+            <li>URL routing/dispatch.</li>
+            <li>Static asset handling.</li> 
+            <li>Request/response objects.</li>
+            <li>Session handling.</li>
+	  </ul>
+        </div>
+
+        <div class="slide">
+          <h1>Advanced features</h1>
+          <ul>
+            <li>Security and permissions.</li>
+            <li>Authorization and authentication.</li>
+	    <li>Event handling.</li>
+	    <li>Much more!</li>
+          </ul>
+        </div>
+
+       <div class="slide">
+         <h1>ZCA and Pyramid</h1>
+         <p>Zope component architecture was originally made for Zope 3, including: </p>
+         <ul>
+           <li>ZODB</li>
+           <li>Traversal</li>
+           <li>configure.zcml support</li>
+           <li>Interfaces</li>
+           <li>Adapters</li>
+           <li>Utilities</li>
+         </ul>
+       </div>
+ 
+	<div class="slide">
+	  <h1>Hello World!</h1>
+	  <div class="python">
+	    <pre>
+               <code>from wsgiref.simple_server import make_server
+from pyramid.config import Configurator
+from pyramid.response import Response
+
+def hello_world(request):
+    return Response('Hello %(name)s!' % request.matchdict)
+
+if __name__ == '__main__':
+    config = Configurator()
+    config.add_route('hello', '/hello/{name}')
+    config.add_view(hello_world, route_name='hello')
+    app = config.make_wsgi_app()
+    server = make_server('0.0.0.0', 8080, app)
+    server.serve_forever()
+	    </code>
+           </pre>
+         </div>
+       </div>
+
+       <div class="slide">
+         <h1>Typical setup</h1>
+          <p>Usually the view_config decorator will be used, explicit imports are not necerssary because of config.scan()</p>
+	  <div class="python">
+	    <pre><code>#views.py
+from pyramid.view import view_config
+
+@view_config(route_name='view1', request_method='GET')
+def view1(request):
+    return Response('OK')
+
+#__init__.py
+config = Configurator()
+...
+config.add_route('view1', '/view/{name}')
+config.scan()
+...
+          </code></pre>
+       </div>
+
+
+       <div class="slide">
+       <h1>Installing?</h1>
+       <ul>
+	 <li>For larger projects <a href="https://pypi.python.org/pypi/zc.buildout">zc.buildout</a> is recommended.</li>
+         <li>Virtualenv is sufficient.</li>
+         <li>Install using<pre>$ easy-install pyramid</pre></li>
+         <li><a href = "http://pythonpaste.org/">PasteScript</a> is a nice thing when developing.</li>
+       </ul>
+       
+       <div class="slide">
+         <h1>Templating</h1>
+	 <ul>
+	   <li>Chameleon is standard. Stand-alone Zope Template Engine, written by Malthe Borch.</li>
+	   <li>Relying on TAL (Template Attribute Language) and METAL (Macro Expansion TAL, not demonstrated in this talk).</li>
+           <li>Chameleon compiles and caches templates.</li>
+           <li>Chameleon provides several extensions to the existing ZPT specification.</li>
+         </ul>
+       </div>
+
+       <div class="slide">
+        <h1>ZPT Example</h1>
+        <pre>
+          <code><!-- Original
+<html>
+<body>
+  <h1>Articles</h1>
+    <ul>
+      <li class="article_item" 
+          tal:repeat="article articles"
+      	  tal:attributes="class string:article_item">
+        <a href="#" title="..."
+  	   tal:attributes="href python:article['url'];
+	  		   title python:article['title']"
+	   tal:content="python:article['title']"></a>
+      </li> 
+    </ul>
+    <a href = "#"
+       tal:attributes="href python:add_article">Add article</a>
+  </body>
+</html> 
+-->&lt;html&gt;<br/>&lt;body&gt;<br/>  &lt;h1&gt;Articles&lt;/h1&gt;<br/>    &lt;ul&gt;<br/>      &lt;li class=&quot;article_item&quot; <br/>          tal:repeat=&quot;article articles&quot;<br/>      	  tal:attributes=&quot;class string:article_item&quot;&gt;<br/>        &lt;a href=&quot;#&quot; title=&quot;...&quot;<br/>  	   tal:attributes=&quot;href python:article['url'];<br/>	  		   title python:article['title']&quot;<br/>	   tal:content=&quot;python:article['title']&quot;&gt;&lt;/a&gt;<br/>      &lt;/li&gt; <br/>    &lt;/ul&gt;<br/>    &lt;a href = &quot;#&quot;<br/>       tal:attributes=&quot;href python:add_article&quot;&gt;Add article&lt;/a&gt;<br/>  &lt;/body&gt;<br/>&lt;/html&gt; <br/></code>
+       </pre>
+      </div>
+
+       <div class="slide">
+         <h1>Using template from code</h1>
+         <pre>
+           <code>
+@view_config(route_name='article_list')
+def article_list(request):
+    articles = []
+    # code that appends dicts to articles
+    return render_to_response(
+        'templates/article_list.pt',
+        {'articles': articles},
+        request=request
+    )                     
+           </code>
+         </pre>
+       </div>
+
+       <div class="slide">
+         Or alternatively
+         <pre>
+           <code>
+@view_config(route_name='article_list', 
+             renderer='templates/article_list.pt')
+def article_list(request):
+    articles = []
+    # ...
+    return {'articles': articles}
+           </code>
+         </pre>
+       </div>
+       <div class="slide">
+         <h1>TAL Expressions</h1>
+         <ul>
+	   <li>tal:attributes - dynamically change element attributes.</li>
+	   <li>tal:define - define variables.</li>
+	   <li>tal:condition - test conditions.</li>
+	   <li>tal:content - replace the content of an element.</li>
+	   <li>tal:omit-tag - remove an element, leaving the content of the element.</li>
+	   <li>tal:repeat - repeat an element.</li>
+	   <li>tal:replace - replace the content of an element and remove the element leaving the content.</li>
+         </ul>
+       </div>
+
+       <div class="slide">
+         <h1>ORM: SQLAlchemy</h1>
+         <ul>
+           <li>Pyramid works well with SQLAlchemy</li>
+           <li>SQLAlchemy works with SQLite, PostgreSQL, MySQL, Oracle, Microsoft SQL.</li>
+           <li>Database sessions via zope.sqlalchemy</li>
+         </ul>
+         <br/><br/>
+         <strong>LIVE DEMO</strong>
+         <p>Demonstrating buildout, python egg, and code</p>
+         <p>Code can be downloaded from <a href = "http://github.com/bosim/pyramid-talk">http://github.com/bosim/pyramid-talk</a></p>
+       </div>
+
+
+        <div class="slide">
+         <h1>Further resources</h1>
+         <ul>
+           <li>
+             <a href = "http://www.pylonsproject.org/">The Pyramid project</a> - Main resource [1].
+	   <li>
+	     <a href = "http://docs.pylonsproject.org/projects/pyramid/en/latest/index.html">The Pyramid Web Application Development Framework</a>
+             - very good tutorial which covers most of components of pyramid [2].
+           </li>
+           <li>
+             <a href = "http://www.muthukadan.net/docs/zca.html">A Comprehensive guide to Zope Component Architecture</a>
+             - best resource convering ZCA available online [3].
+           </li>
+	 </ul>
+         <br/><br/>
+         [1] http://www.pylonsproject.org/<br/>
+         [2] http://docs.pylonsproject.org/projects/pyramid/en/latest/index.html<br/>
+         [3] http://www.muthukadan.net/docs/zca.html
+       </div>
+
+    </div>
+  </body>
+</html>
