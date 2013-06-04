@@ -1,0 +1,23 @@
+<html>
+<body>
+  <h1>Add article</h1>
+
+  <form action="" method="POST">
+    <input type="hidden" name="form.submitted" value="1"/>
+    <fieldset>
+       <label>Title</label>
+       <br/>
+       <input type="text" name="title" value=""/>
+       <br/>
+       <label>Body</label>
+       <br/>
+       <textarea name="body">
+       </textarea>
+    </fieldset>
+    <input type="submit" name="Submit" value="send"/>
+  </form>
+
+  <a href="#" 
+     tal:attributes="href python:back_url">Back</a>
+</body>
+</html>

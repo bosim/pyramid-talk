@@ -1,0 +1,17 @@
+<html>
+<body>
+  <h1>Articles</h1>
+    <ul>
+      <li class="article_item" 
+          tal:repeat="article articles"
+      	  tal:attributes="class string:article_item">
+        <a href="#" title="..."
+  	   tal:attributes="href python:article['url'];
+	  		   title python:article['title']"
+	   tal:content="python:article['title']"></a>
+      </li> 
+    </ul>
+    <a href = "#"
+       tal:attributes="href python:add_article">Add article</a>
+  </body>
+</html> 

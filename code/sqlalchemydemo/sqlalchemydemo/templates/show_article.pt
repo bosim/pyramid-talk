@@ -1,0 +1,8 @@
+<html>
+<body>
+  <h1 tal:content="python:article['title']">Article</h1>
+  <p tal:content="python:article['body']">Body</p>
+  <a href="#" 
+     tal:attributes="href python:back_url">Back</a>
+</body>
+</html>
