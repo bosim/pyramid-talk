@@ -45,33 +45,33 @@
 	<div id="header"></div>
 	<div id="footer">
 	  <h1>Pyramid</h1>
-	  <h2>Less batteries than Django</h2>
+	  <h2>Lightweight webapp framework for Python</h2>
 	</div>
 
       </div>
       <div class="presentation">
 
-	<div class="slide">
-	  <h1>Pyramid</h1>
-	  <h3>Bo Simonsen</h3>
-	  <h4><a href="http://bo.geekworld.dk/">http://bo.geekworld.dk/</a></h4>
-	  <h4><a href = "mailto:bo@geekworld.dk">bo@geekworld.dk</a></h4>
-	</div>
+	    <div class="slide">
+	      <h1>Pyramid</h1>
+	      <h3>Bo Simonsen</h3>
+	      <h4><a href="http://bo.geekworld.dk/">http://bo.geekworld.dk/</a></h4>
+	      <h4><a href = "mailto:bo@geekworld.dk">bo@geekworld.dk</a></h4>
+	    </div>
 
-	<div class="slide">
-	  <h1>What is pyramid?</h1>
-	  <ul>
-	    <li>Created by Chris McDonough and Ben Bangert originally as repoze.bfg.</li>
-	    <li>Highly influenced by <a href = "http://www.zope.org">Zope</a>.</li>
-	    <li>No database or ORM support by default, but several works, for example, <a href = "http://www.sqlalchemy.org/">SQLAlchemy</a>.</li>
-	    <li><a href = "http://chameleon.readthedocs.org/en/latest/">Chameleon ZPT template engine</a> as default, but can be interchanged/mixed. Support for <a href = "http://jinja.pocoo.org/docs/">Jinja2</a>, and others.</li>
-	    <li>Relying on WSGI. Runs on <a href = "https://developers.google.com/appengine/">Google AppEngine</a>, <a href = "https://www.heroku.com/">heroku</a>, etc.</li>
+	    <div class="slide">
+	      <h1>What is pyramid?</h1>
+	      <ul>
+	        <li>Created by Chris McDonough and Ben Bangert originally as repoze.bfg.</li>
+	        <li>Highly influenced by <a href = "http://www.zope.org">Zope</a>.</li>
+	        <li>No database or ORM support by default, but several works, for example, <a href = "http://www.sqlalchemy.org/">SQLAlchemy</a>.</li>
+	        <li><a href = "http://chameleon.readthedocs.org/en/latest/">Chameleon ZPT template engine</a> as default, but can be interchanged/mixed. Support for <a href = "http://jinja.pocoo.org/docs/">Jinja2</a>, and others.</li>
+	        <li>Relying on WSGI. Runs on <a href = "https://developers.google.com/appengine/">Google AppEngine</a>, <a href = "https://www.heroku.com/">heroku</a>, etc.</li>
             <li>Python 3 compatible.</li>
             <li>Some would say more Pythonic than Zope 2 and Django.</li>
-	  </ul>
-	</div>
+	      </ul>
+	    </div>
 
-	<div class="slide">
+	    <div class="slide">
           <h1>Features</h1>
           <ul>
             <li>Views and templates.</li>
@@ -79,7 +79,7 @@
             <li>Static asset handling.</li> 
             <li>Request/response objects.</li>
             <li>Session handling.</li>
-	  </ul>
+	      </ul>
         </div>
 
         <div class="slide">
@@ -87,28 +87,28 @@
           <ul>
             <li>Security and permissions.</li>
             <li>Authorization and authentication.</li>
-	    <li>Event handling.</li>
-	    <li>Much more!</li>
+	        <li>Event handling.</li>
+	        <li>Much more!</li>
           </ul>
         </div>
 
-       <div class="slide">
-         <h1>ZCA and Pyramid</h1>
-         <p>Zope component architecture was originally made for Zope 3, including: </p>
-         <ul>
-           <li>ZODB</li>
-           <li>Traversal</li>
-           <li>configure.zcml support</li>
-           <li>Interfaces</li>
-           <li>Adapters</li>
-           <li>Utilities</li>
-         </ul>
-       </div>
+        <div class="slide">
+          <h1>ZCA and Pyramid</h1>
+          <p>Zope component architecture was originally made for Zope 3, including: </p>
+          <ul>
+            <li>ZODB</li>
+            <li>Traversal</li>
+            <li>configure.zcml support</li>
+            <li>Interfaces</li>
+            <li>Adapters</li>
+            <li>Utilities</li>
+          </ul>
+        </div>
  
-	<div class="slide">
-	  <h1>Hello World!</h1>
-	  <div class="python">
-	    <pre>
+	    <div class="slide">
+	      <h1>Hello World!</h1>
+	      <div class="python">
+	        <pre>
                <code>from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response
@@ -249,6 +249,17 @@ def article_list(request):
          <p>Code can be downloaded from <a href = "http://github.com/bosim/pyramid-talk">http://github.com/bosim/pyramid-talk</a></p>
        </div>
 
+       <div class="slide">
+         <h1>Extensions</h1>
+         <ul>
+           <li>Colander and Deform - Form library</li>
+           <li>translationstring - Translations</li>
+           <li>pyramid_ldap - LDAP integration</li>
+           <li>pyramid_skins - Filesystem resources (templates etc, similar to Zope2)</li>
+           <li>pyramid_xmlrpc - XMLRPC services</li>
+           <li>pyramid_mailer</li>
+         </ul>
+       </div>
 
         <div class="slide">
          <h1>Further resources</h1>
